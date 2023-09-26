@@ -1,0 +1,88 @@
+﻿@using TreeViewProject.Shared;
+
+<div>
+    <input type="checkbox" onchange="CheckParentNode()"/> @NodeText
+    
+    @if (ChildNodes.Count > 0)
+    {
+        <div style="margin-left: 20px;">
+
+            @foreach (var childNode in ChildNodes)
+            {
+                @if (IsSelected == false)
+                {
+                    <TreeViewNode NodeText="@childNode.NodeText" Nodes="@childNode.ChildNodes" IsSelected="false" />
+                    RemoveAllNodes(ChildNodes);
+                }
+                else
+                {
+                    <TreeViewNode NodeText="@childNode.NodeText" Nodes="@childNode.ChildNodes" IsSelected="@childNode.IsSelected" />
+                   
+                    
+                }
+        }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int NodeId { get; set; }
+    [Parameter]
+    public string NodeText { get; set; } = string.Empty;
+    [Parameter]
+    public List<TreeNode> Nodes { get; set; } = new List<TreeNode>();
+
+    [Parameter]
+    public bool IsSelected { get; set; } = true;
+    private List<TreeNode> ChildNodes => Nodes;
+    public List<TreeNode> SelectedNodes = new List<TreeNode>();
+
+    public void CheckParentNode(bool check)
+    {
+        if (check)
+        {
+            if(!SelectedNodes.Where(x=>x.Id== NodeId).Any())
+            {
+                var parentNode = new TreeNode(NodeId, NodeText, IsSelected, ChildNodes)
+                {
+                    Id = NodeId,
+                    NodeText = NodeText,
+                    ChildNodes = ChildNodes
+                };
+                SelectedNodes.Add(parentNode);
+            }
+        }
+        else
+        {
+            var parentNode = SelectedNodes.Where(x => x.Id == NodeId).FirstOrDefault();
+            SelectedNodes.Remove(parentNode!);
+        }
+    }
+    public void DefaultSelectedNodes()
+    {
+        var parentNode = new TreeNode(NodeId , NodeText , IsSelected , ChildNodes)
+        {
+            Id = NodeId,
+            NodeText = NodeText,
+            ChildNodes = ChildNodes
+        };
+        SelectedNodes.Add(parentNode);
+    }
+    public void RemoveAllNodes(List<TreeNode> childNodes)
+    {
+        
+    }
+
+    public void AddNodeToList(TreeNode childNodes)
+    {
+
+    }
+    public void RemoveNodeFromList(TreeNode childNodes)
+    {
+
+    }
+
+  
+}
+
