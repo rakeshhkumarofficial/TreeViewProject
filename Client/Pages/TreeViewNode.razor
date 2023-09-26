@@ -1,8 +1,15 @@
 ﻿@using TreeViewProject.Shared;
 
 <div>
-    <input type="checkbox" onchange="CheckParentNode()"/> @NodeText
-    
+    <input type="checkbox" @bind="IsSelected" /> @NodeText
+    @if (IsSelected)
+    {
+        CheckParentNode(IsSelected);
+    }
+    else
+    {
+        CheckParentNode(false);
+    }
     @if (ChildNodes.Count > 0)
     {
         <div style="margin-left: 20px;">
@@ -12,12 +19,10 @@
                 @if (IsSelected == false)
                 {
                     <TreeViewNode NodeText="@childNode.NodeText" Nodes="@childNode.ChildNodes" IsSelected="false" />
-                    RemoveAllNodes(ChildNodes);
                 }
                 else
                 {
                     <TreeViewNode NodeText="@childNode.NodeText" Nodes="@childNode.ChildNodes" IsSelected="@childNode.IsSelected" />
-                   
                     
                 }
         }
@@ -69,20 +74,6 @@
         };
         SelectedNodes.Add(parentNode);
     }
-    public void RemoveAllNodes(List<TreeNode> childNodes)
-    {
-        
-    }
-
-    public void AddNodeToList(TreeNode childNodes)
-    {
-
-    }
-    public void RemoveNodeFromList(TreeNode childNodes)
-    {
-
-    }
-
-  
+   
 }
 
