@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeViewProject.Server", "Server\TreeViewProject.Server.csproj", "{E83FB4DF-AEF3-4722-9FB8-FCECD1097B20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeViewProject.Server", "Server\TreeViewProject.Server.csproj", "{E83FB4DF-AEF3-4722-9FB8-FCECD1097B20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeViewProject.Client", "Client\TreeViewProject.Client.csproj", "{DB9F4138-69E8-480F-8EAF-8D237BAC9AF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeViewProject.Client", "Client\TreeViewProject.Client.csproj", "{DB9F4138-69E8-480F-8EAF-8D237BAC9AF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeViewProject.Shared", "Shared\TreeViewProject.Shared.csproj", "{B63C864B-8014-4D20-A3FB-3F45E03F4676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeViewProject.Shared", "Shared\TreeViewProject.Shared.csproj", "{B63C864B-8014-4D20-A3FB-3F45E03F4676}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

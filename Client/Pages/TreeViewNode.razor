@@ -1,79 +1,75 @@
 ﻿@using TreeViewProject.Shared;
 
-<div>
-    <input type="checkbox" @bind="IsSelected" /> @NodeText
-    @if (IsSelected)
+@foreach (var childnode in ChildNodes)
+{
+    if (Count == 7)
     {
-        CheckParentNode(IsSelected);
+        Count = 1;
     }
-    else
+    @if (Count == 1)
     {
-        CheckParentNode(false);
+        ListColor = "list-group-item list-group-item-primary";
+    }else if(Count == 2)
+    {
+        ListColor = "list-group-item list-group-item-light";
     }
-    @if (ChildNodes.Count > 0)
+    else if (Count == 3)
     {
-        <div style="margin-left: 20px;">
+        ListColor = "list-group-item list-group-item-warning";
+    }
+    else if (Count == 4)
+    {
+        ListColor = "list-group-item list-group-item-danger";
+    }
+    else if (Count == 5)
+    {
+        ListColor = "list-group-item list-group-item-success";
+    }
+    else if (Count == 6)
+    {
+        ListColor = "list-group-item list-group-item-info";
+    }
 
-            @foreach (var childNode in ChildNodes)
-            {
-                @if (IsSelected == false)
+    Count++;
+
+    <li class=@ListColor>
+        <div class="row">
+            <div class="col">
+                @if (!CheckParentNode)
                 {
-                    <TreeViewNode NodeText="@childNode.NodeText" Nodes="@childNode.ChildNodes" IsSelected="false" />
+                    childnode.IsSelected = false;
+                    <input type="checkbox" @bind="@childnode.IsSelected" disabled>  
                 }
                 else
                 {
-                    <TreeViewNode NodeText="@childNode.NodeText" Nodes="@childNode.ChildNodes" IsSelected="@childNode.IsSelected" />
-                    
+                    <input type="checkbox" @bind="@childnode.IsSelected" @onclick="()=>{ childnode.IsSelected= !childnode.IsSelected;}">
                 }
-        }
-        </div>
-    }
-</div>
+                <span>@childnode.NodeText</span>
+            </div>
 
-@code {
-    [Parameter]
-    public int NodeId { get; set; }
-    [Parameter]
-    public string NodeText { get; set; } = string.Empty;
-    [Parameter]
-    public List<TreeNode> Nodes { get; set; } = new List<TreeNode>();
-
-    [Parameter]
-    public bool IsSelected { get; set; } = true;
-    private List<TreeNode> ChildNodes => Nodes;
-    public List<TreeNode> SelectedNodes = new List<TreeNode>();
-
-    public void CheckParentNode(bool check)
-    {
-        if (check)
-        {
-            if(!SelectedNodes.Where(x=>x.Id== NodeId).Any())
+            @if (childnode.ChildNodes.Count > 0)
             {
-                var parentNode = new TreeNode(NodeId, NodeText, IsSelected, ChildNodes)
-                {
-                    Id = NodeId,
-                    NodeText = NodeText,
-                    ChildNodes = ChildNodes
-                };
-                SelectedNodes.Add(parentNode);
+                <div class="container">
+                    <ul class="list-group">
+                        <TreeViewNode ChildNodes="childnode.ChildNodes" CheckParentNode="childnode.IsSelected" Count="Count"/>
+                    </ul>
+                </div>
             }
-        }
-        else
-        {
-            var parentNode = SelectedNodes.Where(x => x.Id == NodeId).FirstOrDefault();
-            SelectedNodes.Remove(parentNode!);
-        }
-    }
-    public void DefaultSelectedNodes()
-    {
-        var parentNode = new TreeNode(NodeId , NodeText , IsSelected , ChildNodes)
-        {
-            Id = NodeId,
-            NodeText = NodeText,
-            ChildNodes = ChildNodes
-        };
-        SelectedNodes.Add(parentNode);
-    }
-   
+        </div>
+    </li>
+    
 }
 
+
+@code {
+
+    [Parameter]
+    public List<TreeNode> ChildNodes { get; set; } = new List<TreeNode>();
+
+    [Parameter]
+    public bool CheckParentNode { get; set;  }
+
+    [Parameter]
+    public int Count { get; set; }
+    public string ListColor = string.Empty;
+}

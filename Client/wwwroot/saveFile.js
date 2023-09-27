@@ -1,7 +1,7 @@
-﻿function saveFile(fileName, fileContent) {
+﻿function saveFile(fileName, fileContent, fileExtension) {
     var link = document.createElement('a');
     link.download = fileName;
-    link.href = "data:application/yaml;charset=utf-8," + encodeURIComponent(fileContent);
+    link.href = "data:application/" + fileExtension + ";charset=utf-8," + encodeURIComponent(fileContent);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
